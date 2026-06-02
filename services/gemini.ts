@@ -4,7 +4,7 @@ import { ObjectRecognition, LessonContent, QuizQuestion } from '@/types';
 const genAI = new GoogleGenerativeAI(process.env.NEXT_PUBLIC_GEMINI_API_KEY || '');
 
 export async function analyzeImage(imageBase64: string): Promise<ObjectRecognition> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-pro-vision' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
   const prompt = `Analyze this image and identify the main object. Return ONLY valid JSON with this exact structure:
 {
@@ -36,7 +36,7 @@ The stem_concepts should be relevant physics, mathematics, engineering, or techn
 }
 
 export async function generateLesson(objectRecognition: ObjectRecognition): Promise<LessonContent> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
   const prompt = `Generate a comprehensive STEM lesson about "${objectRecognition.object_name}". 
 Return ONLY valid JSON with this exact structure:
@@ -76,7 +76,7 @@ export async function generateQuiz(
   objectName: string,
   stemConcepts: string[]
 ): Promise<QuizQuestion[]> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
 
   const prompt = `Generate 10 multiple choice questions about "${objectName}" covering these STEM concepts: ${stemConcepts.join(', ')}.
 Return ONLY valid JSON array with this exact structure:
